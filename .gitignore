@@ -4,5 +4,11 @@ downloads/
 .env
 .DS_Store
 
+# Cookies files (sensitive)
+cookies.txt
+Instgram_cookies.txt
+facebook_cookies.txt
+*_cookies.txt
+
 # OS specific yt-dlp (will be downloaded on Railway)
 yt-dlp
