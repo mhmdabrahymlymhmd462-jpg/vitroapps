@@ -398,7 +398,8 @@ function showSuccess(downloadUrl, filename) {
     
     // Check if downloadUrl exists and is valid
     if (downloadUrl) {
-        const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `http://localhost:3001${downloadUrl}`;
+        // Use current origin (works for both localhost and Railway)
+        const fullUrl = downloadUrl.startsWith('http') ? downloadUrl : `${window.location.origin}${downloadUrl}`;
         downloadLink.href = fullUrl;
         if (filename) {
             downloadLink.download = filename;
@@ -408,8 +409,15 @@ function showSuccess(downloadUrl, filename) {
         
         // Auto-download the video immediately
         setTimeout(() => {
-            downloadLink.click();
             console.log('Auto-downloading video...');
+            // Force download by creating a temporary link
+            const a = document.createElement('a');
+            a.href = fullUrl;
+            a.download = filename || 'video.mp4';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         }, 500);
     } else {
         showError(t('errorOccurred'));

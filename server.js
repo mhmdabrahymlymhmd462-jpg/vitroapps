@@ -10,7 +10,24 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
-app.use('/downloads', express.static('downloads'));
+
+// Custom middleware for downloads folder - force download instead of playing
+app.use('/downloads', (req, res, next) => {
+    const filePath = path.join(__dirname, 'downloads', path.basename(req.path));
+    
+    // Set headers to force download
+    res.setHeader('Content-Type', 'video/mp4');
+    res.setHeader('Content-Disposition', `attachment; filename="${path.basename(req.path)}"`);
+    res.setHeader('Cache-Control', 'no-cache');
+    
+    // Send the file
+    res.sendFile(filePath, (err) => {
+        if (err) {
+            console.error('Error sending file:', err);
+            res.status(404).send('File not found');
+        }
+    });
+});
 
 // Store active downloads with their progress
 const activeDownloads = new Map();
