@@ -1,0 +1,25 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Cairo', sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hero Header Section */
+.hero-header {
+    position: relative;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    padding: 4rem 2rem 8rem;
+    margin: -20px -20px 3rem -20px;
+    overflow: hidden;
+}
+
+/* ... (same content as style.css) ... */
