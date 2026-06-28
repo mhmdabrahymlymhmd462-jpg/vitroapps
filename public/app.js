@@ -269,8 +269,11 @@ async function handleDownload() {
     startProcessing();
     console.log('Starting download request...');
     
+    // Use dynamic API URL (works for both localhost and production)
+    const API_BASE = window.location.origin;
+    
     try {
-        const response = await fetch('http://localhost:3001/api/download', {
+        const response = await fetch(`${API_BASE}/api/download`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -298,7 +301,9 @@ async function handleDownload() {
 // Listen to SSE in background without showing slow progress
 function listenToProgressBackground(downloadId) {
     console.log('Connecting to SSE for downloadId:', downloadId);
-    const eventSource = new EventSource(`http://localhost:3001/api/progress/${downloadId}`);
+    // Use dynamic API URL
+    const API_BASE = window.location.origin;
+    const eventSource = new EventSource(`${API_BASE}/api/progress/${downloadId}`);
     
     eventSource.onmessage = (event) => {
         try {
