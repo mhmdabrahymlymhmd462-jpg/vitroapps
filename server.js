@@ -198,8 +198,14 @@ async function downloadWithProgress(url, platform, downloadId) {
 
         console.log(`🔧 Command: yt-dlp ${args.join(' ')}`);
 
-        // Spawn yt-dlp process using local executable
-        const ytDlpPath = path.join(__dirname, 'yt-dlp.exe');
+        // Use correct yt-dlp executable based on OS
+        const isWindows = process.platform === 'win32';
+        const ytDlpPath = isWindows 
+            ? path.join(__dirname, 'yt-dlp.exe')
+            : path.join(__dirname, 'yt-dlp');
+        
+        console.log(`📍 Using yt-dlp at: ${ytDlpPath}`);
+        
         const proc = spawn(ytDlpPath, args, { shell: false });
 
         let lastProgress = 0;
